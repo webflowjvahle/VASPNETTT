@@ -38,7 +38,7 @@ function getzoomshift() {
 let currentTime = 0;
 
 const bumpTexture = new THREE.TextureLoader().load(
-  'https://uploads-ssl.webflow.com/646283aaab5c997eb0483d18/647e3b2d20158b64a0528928_bumpmap.jpg'
+  'https://uploads-ssl.webflow.com/646283aaab5c997eb0483d18/647e626b5bfd581b4a1c3664_bumpmap.jpg'
 );
 
 window.Webflow ||= [];
