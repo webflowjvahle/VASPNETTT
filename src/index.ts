@@ -109,22 +109,22 @@ function init3D() {
   // rectLight3.add(rectLightHelper3);
   // rectLight4.add(rectLightHelper4);
 
-  // setting up renderer
-  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  // setting up renderer1
+  const renderer1 = new THREE.WebGLrenderer1({ alpha: true, antialias: true });
 
-  renderer.setSize(parentElement.clientWidth, parentElement.clientHeight);
-  viewport1.appendChild(renderer.domElement);
+  renderer1.setSize(parentElement.clientWidth, parentElement.clientHeight);
+  viewport1.appendChild(renderer1.domElement);
 
-  // Update renderer size on window resize
+  // Update renderer1 size on window resize
   window.addEventListener('resize', () => {
-    renderer.setSize(parentElement.clientWidth, parentElement.clientHeight);
+    renderer1.setSize(parentElement.clientWidth, parentElement.clientHeight);
     camera1.aspect = parentElement.clientWidth / parentElement.clientHeight;
     camera1.updateProjectionMatrix();
     model1.scale.set(getzoomshift(), getzoomshift(), getzoomshift());
   });
 
   // Add controls
-  const controls = new OrbitControls(camera1, renderer.domElement);
+  const controls = new OrbitControls(camera1, renderer1.domElement);
   controls.enableDamping = true;
 
   // Add axes to the scene
@@ -173,7 +173,7 @@ function init3D() {
     if (currentTime > totalRunTime) {
       currentTime = 0;
     }
-    renderer.render(scene, camera1);
+    renderer1.render(scene, camera1);
   }
 
   animate();
@@ -208,8 +208,6 @@ function init3D() {
 
     // Position the model1
 
-    const scaleFactor = 0.0375; // Scale factor for the model1
-
     model1.scale.set(getzoomshift(), getzoomshift(), getzoomshift());
 
     model1.translateY(-0.5125);
@@ -234,15 +232,15 @@ async function load() {
     'https://uploads-ssl.webflow.com/646283aaab5c997eb0483d18/647df5310fe77bc6a9a42bd5_VASPnet-HomePage-HeroSection-3D%20Symbol%20Flowing%20Animation.-Transperancy%20Fix%20V2.glb.txt'
   );
 
-  const texture = await loadTexture(
+  const texture1 = await loadTexture(
     'https://uploads-ssl.webflow.com/646283aaab5c997eb0483d18/6463925c61d09e9e0d0a1415_VASPnet-MainTextureV4.png'
   );
   return { model1, texture };
 }
-const textureLoader = new THREE.TextureLoader();
-const model1Loader = new GLTFLoader();
+const textureLoader1 = new THREE.TextureLoader();
+const modelLoader1 = new GLTFLoader();
 
-function loadTexture(url) {
+function loadTexture1(url) {
   return new Promise((resolve) => {
     textureLoader.load(url, (data) => {
       data.needsUpdate = true;
