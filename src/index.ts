@@ -8,6 +8,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 let model1;
+let model2;
 let rectLight1;
 let rectLight2;
 let rectLight3;
@@ -38,7 +39,7 @@ function getzoomshift() {
 let currentTime = 0;
 
 const bumpTexture = new THREE.TextureLoader().load(
-  'https://uploads-ssl.webflow.com/646283aaab5c997eb0483d18/647e626b5bfd581b4a1c3664_bumpmap.jpg'
+  'https://uploads-ssl.webflow.com/646283aaab5c997eb0483d18/647e3b2d20158b64a0528928_bumpmap.jpg'
 );
 
 window.Webflow ||= [];
@@ -50,31 +51,43 @@ window.Webflow.push(() => {
 function init3D() {
   // select container
   const viewport1 = document.querySelector('[data-3d="c"]');
-  const { parentElement } = viewport1; // Get the parent element
+  const viewport2 = document.querySelector('[data-3d="d"]');
+  const parentElement1 = viewport1.parentElement; // Get the parent element for viewport1
+  const parentElement2 = viewport2.parentElement; // Get the parent element for viewport2
 
   // console.log(viewport1);
+  // console.log(viewport2);
+  // console.log(parentElement1);
+  // console.log(parentElement2);
 
   // setting up scene
 
-  const scene = new THREE.Scene();
+  const scene1 = new THREE.Scene();
+  const scene2 = new THREE.Scene();
 
-  // setting up camera1
-  const aspectRatio = parentElement.clientWidth / parentElement.clientHeight;
-  const camera1 = new THREE.Orthographiccamera(-aspectRatio, aspectRatio, 1, -1, 0.1, 1000);
+  // console.log(scene2);
 
-  // const helper = new THREE.camera1Helper(camera1);
-  // scene.add(helper);
+  // setting up camera
+  const aspectRatio1 = parentElement1.clientWidth / parentElement1.clientHeight;
+  const aspectRatio2 = parentElement2.clientWidth / parentElement2.clientHeight;
+  const camera1 = new THREE.OrthographicCamera(-aspectRatio1, aspectRatio1, 1, -1, 0.1, 1000);
+  const camera2 = new THREE.OrthographicCamera(-aspectRatio2, aspectRatio2, 1, -1, 0.1, 1000);
+  // const helper = new THREE.CameraHelper(camera1);
+  // scene1.add(helper);
 
-  // Zoom in or out with the camera1
+  // Zoom in or out with the camera
 
   camera1.zoom = 1; // Zoom in to half the original size
   camera1.position.set(-30, 0, 5);
   camera1.updateProjectionMatrix(); // Must call after changing properties of the camera1
+  camera2.zoom = 1; // Zoom in to half the original size
+  camera2.position.set(-30, 0, 5);
+  camera2.updateProjectionMatrix(); // Must call after changing properties of the camera1
 
   // setting up lights
   const dirLight = new THREE.DirectionalLight(0xfffffff, 0.00325);
   dirLight.position.set(10, 10, 10);
-  scene.add(dirLight);
+  scene2.add(dirLight);
 
   // rotating lights
 
@@ -83,22 +96,22 @@ function init3D() {
   rectLight1 = new THREE.RectAreaLight(0xffffff, 0.225, 1, 1);
   rectLight1.position.set(0, 0.25, 3);
   rectLight1.lookAt(2, 0, 0);
-  scene.add(rectLight1);
+  scene1.add(rectLight1);
 
   rectLight2 = new THREE.RectAreaLight(0xffffff, 0.125, 0.75, 0.75);
   rectLight2.position.set(0, -0.25, 3);
   rectLight2.lookAt(2, 1, 0);
-  scene.add(rectLight2);
+  scene1.add(rectLight2);
 
   rectLight3 = new THREE.RectAreaLight(0xffffff, 0.05, 0.5, 0.5);
   rectLight3.position.set(0, 0.25, 3);
   rectLight3.lookAt(2, -1, 1);
-  scene.add(rectLight3);
+  scene1.add(rectLight3);
 
   rectLight4 = new THREE.RectAreaLight(0xffffff, 0.05, 0.5, 0.5);
   rectLight4.position.set(0, -0.25, 3);
   rectLight4.lookAt(2, -1, 1);
-  scene.add(rectLight4);
+  scene1.add(rectLight4);
 
   // const rectLightHelper1 = new RectAreaLightHelper(rectLight1);
   // const rectLightHelper2 = new RectAreaLightHelper(rectLight2);
@@ -109,27 +122,49 @@ function init3D() {
   // rectLight3.add(rectLightHelper3);
   // rectLight4.add(rectLightHelper4);
 
-  // setting up renderer1
-  const renderer1 = new THREE.WebGLrenderer1({ alpha: true, antialias: true });
+  // Create an ambient light
+  const ambientLight = new THREE.AmbientLight(0x404040); // soft white light
 
-  renderer1.setSize(parentElement.clientWidth, parentElement.clientHeight);
-  viewport1.appendChild(renderer1.domElement);
+  // Add the ambient light to scene2
+  scene2.add(ambientLight);
 
-  // Update renderer1 size on window resize
+  const geometry = new THREE.BoxGeometry(1, 1, 1);
+  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+  const cube = new THREE.Mesh(geometry, material);
+  scene1.add(cube);
+
+  // setting up renderer
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+
+  console.log(renderer);
+
+  renderer.setSize(parentElement1.clientWidth, parentElement1.clientHeight);
+  renderer.setSize(parentElement2.clientWidth, parentElement2.clientHeight);
+  viewport1.appendChild(renderer.domElement);
+  viewport2.appendChild(renderer.domElement);
+
+  // Update renderer size on window resize
   window.addEventListener('resize', () => {
-    renderer1.setSize(parentElement.clientWidth, parentElement.clientHeight);
-    camera1.aspect = parentElement.clientWidth / parentElement.clientHeight;
+    renderer.setSize(parentElement1.clientWidth, parentElement1.clientHeight);
+    renderer.setSize(parentElement2.clientWidth, parentElement2.clientHeight);
+    camera1.aspect = parentElement1.clientWidth / parentElement1.clientHeight;
+    camera2.aspect = parentElement2.clientWidth / parentElement2.clientHeight;
     camera1.updateProjectionMatrix();
+    camera2.updateProjectionMatrix();
     model1.scale.set(getzoomshift(), getzoomshift(), getzoomshift());
   });
 
   // Add controls
-  const controls = new OrbitControls(camera1, renderer1.domElement);
-  controls.enableDamping = true;
+  const controls1 = new OrbitControls(camera1, renderer.domElement);
+  const controls2 = new OrbitControls(camera2, renderer.domElement);
+  controls1.enableDamping = true;
+  controls2.enableDamping = true;
 
   // Add axes to the scene
-  // const axesHelper = new THREE.AxesHelper(6);
-  // scene.add(axesHelper);
+  const axesHelper1 = new THREE.AxesHelper(6);
+  scene1.add(axesHelper1);
+  const axesHelper2 = new THREE.AxesHelper(6);
+  scene2.add(axesHelper2);
 
   // animation setup
   const clock = new THREE.Clock();
@@ -142,7 +177,8 @@ function init3D() {
     if (mixer !== null) {
       mixer.update(delta);
     }
-    controls.update();
+    controls1.update();
+    controls2.update();
     const totalRunTime = 5.3;
     const totalTime = 5;
     const circumference = 2 * Math.PI;
@@ -173,7 +209,8 @@ function init3D() {
     if (currentTime > totalRunTime) {
       currentTime = 0;
     }
-    renderer1.render(scene, camera1);
+    renderer.render(scene1, camera1);
+    renderer.render(scene2, camera2);
   }
 
   animate();
@@ -182,6 +219,7 @@ function init3D() {
   const assets = load();
   assets.then((data) => {
     model1 = data.model1.scene;
+    model2 = data.model2.scene;
     const { animations } = data.model1;
     // console.log(animations);
 
@@ -213,7 +251,10 @@ function init3D() {
     model1.translateY(-0.5125);
     model1.translateZ(0.6525);
 
-    controls.update();
+    model2.position.set(0, 0, 0);
+
+    controls1.update();
+    controls2.update();
 
     // initialize mixer after model1 is loaded
     mixer = new THREE.AnimationMixer(model1);
@@ -222,25 +263,31 @@ function init3D() {
       action.play();
     });
 
-    scene.add(model1);
+    scene1.add(model1);
+    scene2.add(model2);
+    console.log('Model 1: ', model1); // log model2
+    console.log('Model 2: ', model2); // log model2
   });
 }
 
 /* Loader Functions */
 async function load() {
-  model1 = await loadmodel1(
+  model1 = await loadModel(
     'https://uploads-ssl.webflow.com/646283aaab5c997eb0483d18/647df5310fe77bc6a9a42bd5_VASPnet-HomePage-HeroSection-3D%20Symbol%20Flowing%20Animation.-Transperancy%20Fix%20V2.glb.txt'
   );
+  model2 = await loadModel(
+    'https://uploads-ssl.webflow.com/646283aaab5c997eb0483d18/6462972b77d6dd3cca0f6d16_VASPdata-HomePage-highlightAnimation-V2.glb.txt'
+  );
 
-  const texture1 = await loadTexture(
+  const texture = await loadTexture(
     'https://uploads-ssl.webflow.com/646283aaab5c997eb0483d18/6463925c61d09e9e0d0a1415_VASPnet-MainTextureV4.png'
   );
-  return { model1, texture };
+  return { model1, model2, texture };
 }
-const textureLoader1 = new THREE.TextureLoader();
-const modelLoader1 = new GLTFLoader();
+const textureLoader = new THREE.TextureLoader();
+const modelLoader = new GLTFLoader();
 
-function loadTexture1(url) {
+function loadTexture(url) {
   return new Promise((resolve) => {
     textureLoader.load(url, (data) => {
       data.needsUpdate = true;
@@ -251,10 +298,10 @@ function loadTexture1(url) {
   });
 }
 
-function loadmodel1(url, id) {
+function loadModel(url, id) {
   return new Promise((resolve, reject) => {
-    model1Loader.load(url, (gltf) => {
-      // console.log(gltf);
+    modelLoader.load(url, (gltf) => {
+      console.log(gltf);
       const { scene } = gltf;
       const { animations } = gltf;
       resolve({ scene, animations });

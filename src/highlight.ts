@@ -7,14 +7,14 @@ import { RectAreaLightUniformsLib } from 'three/addons/lights/RectAreaLightUnifo
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-let model;
-let rectLight1;
-let rectLight2;
-let rectLight3;
+let model2;
+let rectLight5;
+let rectLight6;
+let rectLight7;
 
-let lightAngle1 = 0.25;
-let lightAngle2 = 0.625;
-let lightAngle3 = 0.5;
+const lightAngle5 = 0.25;
+const lightAngle6 = 0.625;
+const lightAngle7 = 0.5;
 
 const break1 = 992;
 const break2 = 768;
@@ -78,20 +78,20 @@ function init3D() {
 
   RectAreaLightUniformsLib.init();
 
-  rectLight1 = new THREE.RectAreaLight(0xffffff, 0.225, 1, 1);
-  rectLight1.position.set(0, 0.25, 3);
-  rectLight1.lookAt(2, 0, 0);
-  scene.add(rectLight1);
+  rectLight5 = new THREE.RectAreaLight(0xffffff, 0.225, 1, 1);
+  rectLight5.position.set(0, 0.25, 3);
+  rectLight5.lookAt(2, 0, 0);
+  scene.add(rectLight5);
 
-  rectLight2 = new THREE.RectAreaLight(0xffffff, 0.125, 0.75, 0.75);
-  rectLight2.position.set(0, -0.25, 3);
-  rectLight2.lookAt(2, 1, 0);
-  scene.add(rectLight2);
+  rectLight6 = new THREE.RectAreaLight(0xffffff, 0.125, 0.75, 0.75);
+  rectLight6.position.set(0, -0.25, 3);
+  rectLight6.lookAt(2, 1, 0);
+  scene.add(rectLight6);
 
-  rectLight3 = new THREE.RectAreaLight(0xffffff, 0.05, 0.5, 0.5);
-  rectLight3.position.set(0, 0.25, 3);
-  rectLight3.lookAt(2, -1, 1);
-  scene.add(rectLight3);
+  rectLight7 = new THREE.RectAreaLight(0xffffff, 0.05, 0.5, 0.5);
+  rectLight.position.set(0, 0.25, 3);
+  rectLight7.lookAt(2, -1, 1);
+  scene.add(rectLight7);
 
   // const rectLightHelper1 = new RectAreaLightHelper(rectLight1);
   // const rectLightHelper2 = new RectAreaLightHelper(rectLight2);
