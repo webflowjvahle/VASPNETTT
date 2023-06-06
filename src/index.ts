@@ -248,7 +248,7 @@ function init3D() {
 
     model1.scale.set(getzoomshift(), getzoomshift(), getzoomshift());
 
-    model1.translateY(-0.5125);
+    model1.translateY(-0.5725);
     model1.translateZ(0.6525);
 
     // model2.position.set(0, 0, 0);
