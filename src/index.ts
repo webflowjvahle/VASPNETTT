@@ -51,9 +51,9 @@ window.Webflow.push(() => {
 function init3D() {
   // select container
   const viewport1 = document.querySelector('[data-3d="c"]');
-  const viewport2 = document.querySelector('[data-3d="d"]');
+  // const viewport2 = document.querySelector('[data-3d="d"]');
   const parentElement1 = viewport1.parentElement; // Get the parent element for viewport1
-  const parentElement2 = viewport2.parentElement; // Get the parent element for viewport2
+  // const parentElement2 = viewport2.parentElement; // Get the parent element for viewport2
 
   // console.log(viewport1);
   // console.log(viewport2);
@@ -63,15 +63,15 @@ function init3D() {
   // setting up scene
 
   const scene1 = new THREE.Scene();
-  const scene2 = new THREE.Scene();
+  // const scene2 = new THREE.Scene();
 
   // console.log(scene2);
 
   // setting up camera
   const aspectRatio1 = parentElement1.clientWidth / parentElement1.clientHeight;
-  const aspectRatio2 = parentElement2.clientWidth / parentElement2.clientHeight;
+  // const aspectRatio2 = parentElement2.clientWidth / parentElement2.clientHeight;
   const camera1 = new THREE.OrthographicCamera(-aspectRatio1, aspectRatio1, 1, -1, 0.1, 1000);
-  const camera2 = new THREE.OrthographicCamera(-aspectRatio2, aspectRatio2, 1, -1, 0.1, 1000);
+  // const camera2 = new THREE.OrthographicCamera(-aspectRatio2, aspectRatio2, 1, -1, 0.1, 1000);
   // const helper = new THREE.CameraHelper(camera1);
   // scene1.add(helper);
 
@@ -80,14 +80,14 @@ function init3D() {
   camera1.zoom = 1; // Zoom in to half the original size
   camera1.position.set(-30, 0, 5);
   camera1.updateProjectionMatrix(); // Must call after changing properties of the camera1
-  camera2.zoom = 1; // Zoom in to half the original size
-  camera2.position.set(-30, 0, 5);
-  camera2.updateProjectionMatrix(); // Must call after changing properties of the camera1
+  // camera2.zoom = 1; // Zoom in to half the original size
+  // camera2.position.set(-30, 0, 5);
+  // camera2.updateProjectionMatrix(); // Must call after changing properties of the camera1
 
   // setting up lights
   const dirLight = new THREE.DirectionalLight(0xfffffff, 0.00325);
   dirLight.position.set(10, 10, 10);
-  scene2.add(dirLight);
+  scene1.add(dirLight);
 
   // rotating lights
 
@@ -123,48 +123,48 @@ function init3D() {
   // rectLight4.add(rectLightHelper4);
 
   // Create an ambient light
-  const ambientLight = new THREE.AmbientLight(0x404040); // soft white light
+  // const ambientLight = new THREE.AmbientLight(0x404040); // soft white light
 
   // Add the ambient light to scene2
-  scene2.add(ambientLight);
+  // scene2.add(ambientLight);
 
-  const geometry = new THREE.BoxGeometry(1, 1, 1);
-  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-  const cube = new THREE.Mesh(geometry, material);
-  scene1.add(cube);
+  // const geometry = new THREE.BoxGeometry(1, 1, 1);
+  // const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+  // const cube = new THREE.Mesh(geometry, material);
+  // scene1.add(cube);
 
   // setting up renderer
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 
-  console.log(renderer);
+  // console.log(renderer);
 
   renderer.setSize(parentElement1.clientWidth, parentElement1.clientHeight);
-  renderer.setSize(parentElement2.clientWidth, parentElement2.clientHeight);
+  // renderer.setSize(parentElement2.clientWidth, parentElement2.clientHeight);
   viewport1.appendChild(renderer.domElement);
-  viewport2.appendChild(renderer.domElement);
+  // viewport2.appendChild(renderer.domElement);
 
   // Update renderer size on window resize
   window.addEventListener('resize', () => {
     renderer.setSize(parentElement1.clientWidth, parentElement1.clientHeight);
-    renderer.setSize(parentElement2.clientWidth, parentElement2.clientHeight);
+    // renderer.setSize(parentElement2.clientWidth, parentElement2.clientHeight);
     camera1.aspect = parentElement1.clientWidth / parentElement1.clientHeight;
-    camera2.aspect = parentElement2.clientWidth / parentElement2.clientHeight;
+    // camera2.aspect = parentElement2.clientWidth / parentElement2.clientHeight;
     camera1.updateProjectionMatrix();
-    camera2.updateProjectionMatrix();
+    // camera2.updateProjectionMatrix();
     model1.scale.set(getzoomshift(), getzoomshift(), getzoomshift());
   });
 
   // Add controls
   const controls1 = new OrbitControls(camera1, renderer.domElement);
-  const controls2 = new OrbitControls(camera2, renderer.domElement);
+  // const controls2 = new OrbitControls(camera2, renderer.domElement);
   controls1.enableDamping = true;
-  controls2.enableDamping = true;
+  // controls2.enableDamping = true;
 
   // Add axes to the scene
   const axesHelper1 = new THREE.AxesHelper(6);
   scene1.add(axesHelper1);
-  const axesHelper2 = new THREE.AxesHelper(6);
-  scene2.add(axesHelper2);
+  // const axesHelper2 = new THREE.AxesHelper(6);
+  // scene2.add(axesHelper2);
 
   // animation setup
   const clock = new THREE.Clock();
@@ -178,7 +178,7 @@ function init3D() {
       mixer.update(delta);
     }
     controls1.update();
-    controls2.update();
+    // controls2.update();
     const totalRunTime = 5.3;
     const totalTime = 5;
     const circumference = 2 * Math.PI;
@@ -210,7 +210,7 @@ function init3D() {
       currentTime = 0;
     }
     renderer.render(scene1, camera1);
-    renderer.render(scene2, camera2);
+    // renderer.render(scene2, camera2);
   }
 
   animate();
@@ -219,7 +219,7 @@ function init3D() {
   const assets = load();
   assets.then((data) => {
     model1 = data.model1.scene;
-    model2 = data.model2.scene;
+    // model2 = data.model2.scene;
     const { animations } = data.model1;
     // console.log(animations);
 
@@ -251,10 +251,10 @@ function init3D() {
     model1.translateY(-0.5125);
     model1.translateZ(0.6525);
 
-    model2.position.set(0, 0, 0);
+    // model2.position.set(0, 0, 0);
 
     controls1.update();
-    controls2.update();
+    // controls2.update();
 
     // initialize mixer after model1 is loaded
     mixer = new THREE.AnimationMixer(model1);
@@ -264,9 +264,9 @@ function init3D() {
     });
 
     scene1.add(model1);
-    scene2.add(model2);
+    // scene2.add(model2);
     console.log('Model 1: ', model1); // log model2
-    console.log('Model 2: ', model2); // log model2
+    // console.log('Model 2: ', model2); // log model2
   });
 }
 
@@ -275,14 +275,14 @@ async function load() {
   model1 = await loadModel(
     'https://uploads-ssl.webflow.com/646283aaab5c997eb0483d18/647df5310fe77bc6a9a42bd5_VASPnet-HomePage-HeroSection-3D%20Symbol%20Flowing%20Animation.-Transperancy%20Fix%20V2.glb.txt'
   );
-  model2 = await loadModel(
-    'https://uploads-ssl.webflow.com/646283aaab5c997eb0483d18/6462972b77d6dd3cca0f6d16_VASPdata-HomePage-highlightAnimation-V2.glb.txt'
-  );
+  // model2 = await loadModel(
+  //   'https://uploads-ssl.webflow.com/646283aaab5c997eb0483d18/6462972b77d6dd3cca0f6d16_VASPdata-HomePage-highlightAnimation-V2.glb.txt'
+  // );
 
   const texture = await loadTexture(
     'https://uploads-ssl.webflow.com/646283aaab5c997eb0483d18/6463925c61d09e9e0d0a1415_VASPnet-MainTextureV4.png'
   );
-  return { model1, model2, texture };
+  return { model1, texture };
 }
 const textureLoader = new THREE.TextureLoader();
 const modelLoader = new GLTFLoader();
