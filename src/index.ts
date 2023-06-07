@@ -25,7 +25,7 @@ const break3 = 480;
 
 function getYshift() {
   if (window.innerWidth < break3) {
-    return -1.25;
+    return -0.625;
   }
   if (window.innerWidth < break2) {
     return -0.5725;
@@ -33,7 +33,7 @@ function getYshift() {
   if (window.innerWidth < break1) {
     return -0.5725;
   }
-  return -0.5725;
+  return -0.5725";
 }
 
 function getzoomshift() {
@@ -174,8 +174,8 @@ function init3D() {
   // controls2.enableDamping = true;
 
   // Add axes to the scene
-  const axesHelper1 = new THREE.AxesHelper(6);
-  scene1.add(axesHelper1);
+  // const axesHelper1 = new THREE.AxesHelper(6);
+  // scene1.add(axesHelper1);
   // const axesHelper2 = new THREE.AxesHelper(6);
   // scene2.add(axesHelper2);
 
