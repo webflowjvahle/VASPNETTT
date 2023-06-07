@@ -138,8 +138,8 @@ function init3D() {
   });
 
   // Add controls
-  const controls1 = new OrbitControls(camera1, renderer.domElement);
-  controls1.enableDamping = true;
+  // const controls1 = new OrbitControls(camera1, renderer.domElement);
+  // controls1.enableDamping = true;
 
   // Add axes to the scene
   // const axesHelper1 = new THREE.AxesHelper(6);
