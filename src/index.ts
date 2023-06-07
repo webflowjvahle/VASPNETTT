@@ -25,7 +25,7 @@ const break3 = 480;
 
 function getzoomshift() {
   if (window.innerWidth < break3) {
-    return 0.05;
+    return 0.04825;
   }
   if (window.innerWidth < break2) {
     return 0.0475;
