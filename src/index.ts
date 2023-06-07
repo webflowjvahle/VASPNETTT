@@ -25,7 +25,7 @@ const break3 = 480;
 
 function getYshift() {
   if (window.innerWidth < break3) {
-    return -0.625;
+    return -0.6525;
   }
   if (window.innerWidth < break2) {
     return -0.5725;
@@ -33,7 +33,7 @@ function getYshift() {
   if (window.innerWidth < break1) {
     return -0.5725;
   }
-  return -0.5725";
+  return -0.525;
 }
 
 function getzoomshift() {
