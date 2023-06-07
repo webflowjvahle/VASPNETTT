@@ -8,7 +8,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 let model1;
-let model2;
+// let model2;
 let rectLight1;
 let rectLight2;
 let rectLight3;
@@ -25,7 +25,7 @@ const break3 = 480;
 
 function getYshift() {
   if (window.innerWidth < break3) {
-    return -0.6525;
+    return -0.9525;
   }
   if (window.innerWidth < break2) {
     return -0.5725;
@@ -38,7 +38,7 @@ function getYshift() {
 
 function getzoomshift() {
   if (window.innerWidth < break3) {
-    return 0.05;
+    return 0.07725;
   }
   if (window.innerWidth < break2) {
     return 0.0475;
@@ -236,7 +236,7 @@ function init3D() {
     const { animations } = data.model1;
     // console.log(animations);
 
-    const { texture } = data;
+    // const { texture } = data;
 
     const newMaterial = new THREE.MeshStandardMaterial({
       metalness: 0,
