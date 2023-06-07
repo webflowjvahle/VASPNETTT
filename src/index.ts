@@ -8,16 +8,15 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 let model1;
-// let model2;
 let rectLight1;
 let rectLight2;
 let rectLight3;
 let rectLight4;
 
-let lightAngle1 = 0.25;
-let lightAngle2 = 0.625;
-let lightAngle3 = 0.5;
-let lightAngle4 = 0.5;
+let lightAngle1 = 1.25;
+let lightAngle2 = 1.625;
+let lightAngle3 = 1.5;
+let lightAngle4 = 1.7;
 
 const break1 = 992;
 const break2 = 768;
@@ -25,28 +24,28 @@ const break3 = 480;
 
 function getYshift() {
   if (window.innerWidth < break3) {
-    return -0.9525;
+    return -0.925;
   }
   if (window.innerWidth < break2) {
-    return -0.5725;
+    return -1;
   }
   if (window.innerWidth < break1) {
-    return -0.5725;
+    return -1;
   }
-  return -0.525;
+  return -1;
 }
 
 function getzoomshift() {
   if (window.innerWidth < break3) {
-    return 0.07725;
+    return 0.0425;
   }
   if (window.innerWidth < break2) {
-    return 0.0475;
+    return 0.04;
   }
   if (window.innerWidth < break1) {
-    return 0.05;
+    return 0.04;
   }
-  return 0.0375;
+  return 0.04;
 }
 
 let currentTime = 0;
@@ -64,41 +63,28 @@ window.Webflow.push(() => {
 function init3D() {
   // select container
   const viewport1 = document.querySelector('[data-3d="c"]');
-  // const viewport2 = document.querySelector('[data-3d="d"]');
   const parentElement1 = viewport1.parentElement; // Get the parent element for viewport1
-  // const parentElement2 = viewport2.parentElement; // Get the parent element for viewport2
 
   // console.log(viewport1);
-  // console.log(viewport2);
   // console.log(parentElement1);
-  // console.log(parentElement2);
 
   // setting up scene
 
   const scene1 = new THREE.Scene();
-  // const scene2 = new THREE.Scene();
-
   // console.log(scene2);
 
   // setting up camera
   const aspectRatio1 = parentElement1.clientWidth / parentElement1.clientHeight;
-  // const aspectRatio2 = parentElement2.clientWidth / parentElement2.clientHeight;
   const camera1 = new THREE.OrthographicCamera(-aspectRatio1, aspectRatio1, 1, -1, 0.1, 1000);
-  // const camera2 = new THREE.OrthographicCamera(-aspectRatio2, aspectRatio2, 1, -1, 0.1, 1000);
-  // const helper = new THREE.CameraHelper(camera1);
-  // scene1.add(helper);
 
   // Zoom in or out with the camera
 
   camera1.zoom = 1; // Zoom in to half the original size
-  camera1.position.set(-30, 0, 5);
+  camera1.position.set(-40, 0, 5);
   camera1.updateProjectionMatrix(); // Must call after changing properties of the camera1
-  // camera2.zoom = 1; // Zoom in to half the original size
-  // camera2.position.set(-30, 0, 5);
-  // camera2.updateProjectionMatrix(); // Must call after changing properties of the camera1
 
   // setting up lights
-  const dirLight = new THREE.DirectionalLight(0xfffffff, 0.00325);
+  const dirLight = new THREE.DirectionalLight(0xfffffff, 0.00375);
   dirLight.position.set(10, 10, 10);
   scene1.add(dirLight);
 
@@ -107,21 +93,21 @@ function init3D() {
   RectAreaLightUniformsLib.init();
 
   rectLight1 = new THREE.RectAreaLight(0xffffff, 0.225, 1, 1);
-  rectLight1.position.set(0, 0.25, 3);
+  rectLight1.position.set(0, 0.5, 3);
   rectLight1.lookAt(2, 0, 0);
   scene1.add(rectLight1);
 
-  rectLight2 = new THREE.RectAreaLight(0xffffff, 0.125, 0.75, 0.75);
+  rectLight2 = new THREE.RectAreaLight(0xffffff, 0.125, 0.75, 2);
   rectLight2.position.set(0, -0.25, 3);
-  rectLight2.lookAt(2, 1, 0);
+  rectLight2.lookAt(2, 0.5, 0);
   scene1.add(rectLight2);
 
-  rectLight3 = new THREE.RectAreaLight(0xffffff, 0.05, 0.5, 0.5);
+  rectLight3 = new THREE.RectAreaLight(0xffffff, 0.05, 0.5, 2);
   rectLight3.position.set(0, 0.25, 3);
   rectLight3.lookAt(2, -1, 1);
   scene1.add(rectLight3);
 
-  rectLight4 = new THREE.RectAreaLight(0xffffff, 0.05, 0.5, 0.5);
+  rectLight4 = new THREE.RectAreaLight(0xffffff, 0.05, 0.5, 2);
   rectLight4.position.set(0, -0.25, 3);
   rectLight4.lookAt(2, -1, 1);
   scene1.add(rectLight4);
@@ -135,49 +121,29 @@ function init3D() {
   // rectLight3.add(rectLightHelper3);
   // rectLight4.add(rectLightHelper4);
 
-  // Create an ambient light
-  // const ambientLight = new THREE.AmbientLight(0x404040); // soft white light
-
-  // Add the ambient light to scene2
-  // scene2.add(ambientLight);
-
-  // const geometry = new THREE.BoxGeometry(1, 1, 1);
-  // const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-  // const cube = new THREE.Mesh(geometry, material);
-  // scene1.add(cube);
-
   // setting up renderer
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 
   // console.log(renderer);
 
   renderer.setSize(parentElement1.clientWidth, parentElement1.clientHeight);
-  // renderer.setSize(parentElement2.clientWidth, parentElement2.clientHeight);
   viewport1.appendChild(renderer.domElement);
-  // viewport2.appendChild(renderer.domElement);
 
   // Update renderer size on window resize
   window.addEventListener('resize', () => {
     renderer.setSize(parentElement1.clientWidth, parentElement1.clientHeight);
-    // renderer.setSize(parentElement2.clientWidth, parentElement2.clientHeight);
     camera1.aspect = parentElement1.clientWidth / parentElement1.clientHeight;
-    // camera2.aspect = parentElement2.clientWidth / parentElement2.clientHeight;
     camera1.updateProjectionMatrix();
-    // camera2.updateProjectionMatrix();
     model1.scale.set(getzoomshift(), getzoomshift(), getzoomshift());
   });
 
   // Add controls
   const controls1 = new OrbitControls(camera1, renderer.domElement);
-  // const controls2 = new OrbitControls(camera2, renderer.domElement);
   controls1.enableDamping = true;
-  // controls2.enableDamping = true;
 
   // Add axes to the scene
   // const axesHelper1 = new THREE.AxesHelper(6);
   // scene1.add(axesHelper1);
-  // const axesHelper2 = new THREE.AxesHelper(6);
-  // scene2.add(axesHelper2);
 
   // animation setup
   const clock = new THREE.Clock();
@@ -191,7 +157,6 @@ function init3D() {
       mixer.update(delta);
     }
     controls1.update();
-    // controls2.update();
     const totalRunTime = 5.3;
     const totalTime = 5;
     const circumference = 2 * Math.PI;
@@ -223,7 +188,6 @@ function init3D() {
       currentTime = 0;
     }
     renderer.render(scene1, camera1);
-    // renderer.render(scene2, camera2);
   }
 
   animate();
@@ -232,19 +196,17 @@ function init3D() {
   const assets = load();
   assets.then((data) => {
     model1 = data.model1.scene;
-    // model2 = data.model2.scene;
     const { animations } = data.model1;
     // console.log(animations);
 
     // const { texture } = data;
 
     const newMaterial = new THREE.MeshStandardMaterial({
-      metalness: 0,
-      roughness: 0.5,
+      metalness: 0.1,
+      roughness: 0.75,
       // map: texturefile,
     });
 
-    // newMaterial.normalMap = normalTexture;
     newMaterial.bumpMap = bumpTexture;
     newMaterial.bumpScale = 0.0035;
 
@@ -262,12 +224,9 @@ function init3D() {
     model1.scale.set(getzoomshift(), getzoomshift(), getzoomshift());
 
     model1.translateY(getYshift());
-    model1.translateZ(0.6525);
-
-    // model2.position.set(0, 0, 0);
+    model1.translateZ(0.575);
 
     controls1.update();
-    // controls2.update();
 
     // initialize mixer after model1 is loaded
     mixer = new THREE.AnimationMixer(model1);
@@ -277,9 +236,6 @@ function init3D() {
     });
 
     scene1.add(model1);
-    // scene2.add(model2);
-    console.log('Model 1: ', model1); // log model2
-    // console.log('Model 2: ', model2); // log model2
   });
 }
 
@@ -288,9 +244,6 @@ async function load() {
   model1 = await loadModel(
     'https://uploads-ssl.webflow.com/646283aaab5c997eb0483d18/647df5310fe77bc6a9a42bd5_VASPnet-HomePage-HeroSection-3D%20Symbol%20Flowing%20Animation.-Transperancy%20Fix%20V2.glb.txt'
   );
-  // model2 = await loadModel(
-  //   'https://uploads-ssl.webflow.com/646283aaab5c997eb0483d18/6462972b77d6dd3cca0f6d16_VASPdata-HomePage-highlightAnimation-V2.glb.txt'
-  // );
 
   const texture = await loadTexture(
     'https://uploads-ssl.webflow.com/646283aaab5c997eb0483d18/6463925c61d09e9e0d0a1415_VASPnet-MainTextureV4.png'
@@ -314,7 +267,7 @@ function loadTexture(url) {
 function loadModel(url, id) {
   return new Promise((resolve, reject) => {
     modelLoader.load(url, (gltf) => {
-      console.log(gltf);
+      // console.log(gltf);
       const { scene } = gltf;
       const { animations } = gltf;
       resolve({ scene, animations });
