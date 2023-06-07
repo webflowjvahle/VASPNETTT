@@ -25,7 +25,7 @@ const break3 = 480;
 
 function getYshift() {
   if (window.innerWidth < break3) {
-    return -0.79125;
+    return -1.25;
   }
   if (window.innerWidth < break2) {
     return -0.5725;
