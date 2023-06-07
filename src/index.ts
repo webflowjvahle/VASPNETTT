@@ -23,9 +23,22 @@ const break1 = 992;
 const break2 = 768;
 const break3 = 480;
 
+function getYshift() {
+  if (window.innerWidth < break3) {
+    return -0.59125;
+  }
+  if (window.innerWidth < break2) {
+    return -0.5725;
+  }
+  if (window.innerWidth < break1) {
+    return -0.5725;
+  }
+  return -0.5725;
+}
+
 function getzoomshift() {
   if (window.innerWidth < break3) {
-    return 0.04825;
+    return 0.05;
   }
   if (window.innerWidth < break2) {
     return 0.0475;
@@ -248,7 +261,7 @@ function init3D() {
 
     model1.scale.set(getzoomshift(), getzoomshift(), getzoomshift());
 
-    model1.translateY(-0.5725);
+    model1.translateY(getYshift());
     model1.translateZ(0.6525);
 
     // model2.position.set(0, 0, 0);
